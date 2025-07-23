@@ -1,0 +1,352 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - Core user management
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  phone         String    @unique // Made required for connections
+  password      String
+  firstName     String
+  lastName      String
+  country       String    // ISO country code (e.g., "TZ")
+  profession    String?   // e.g., "software engineer"
+  businessType  String?   // e.g., "retail", "services", "manufacturing", "agriculture"
+  skills        String[]  // e.g., ["JavaScript", "React"]
+  clubIds       Int[]     // IDs of favorite clubs (e.g., Simba)
+  providerId    Int?      // Linked telecom provider
+  institutionId Int?      // Linked institution
+  avatar        String?   // Profile image URL
+  isVerified    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  cv            CV?
+  portfolios    Portfolio[]
+  products      Product[]
+  orders        Order[]     @relation("UserOrders")
+  sales         Order[]     @relation("UserSales")
+  interactions  Interaction[]
+  payments      Payment[]
+  memberships   Membership[]
+  innovations   Innovation[]
+  feedItems     FeedItem[]
+  provider      Provider?   @relation(fields: [providerId], references: [id])
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+
+  @@index([email])
+  @@index([phone])
+  @@index([country])
+  @@index([profession])
+  @@index([businessType])
+  @@index([skills])
+  @@index([providerId])
+  @@index([institutionId])
+  @@index([clubIds])
+}
+
+// Provider model - Telecommunication providers
+model Provider {
+  id        Int      @id @default(autoincrement())
+  name      String   // e.g., "Vodacom"
+  slug      String   @unique
+  logo      String?  // Logo URL
+  content   Json     // Page content
+  services  Json[]   // Services (name, price, API link)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  users      User[]
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+// Club model - Sports clubs
+model Club {
+  id          Int      @id @default(autoincrement())
+  name        String   // e.g., "Simba"
+  slug        String   @unique
+  sport       String   // e.g., "football"
+  logo        String?  // Club logo URL
+  content     Json     // Page content
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  memberships Membership[]
+
+  @@index([slug])
+  @@index([sport])
+  @@index([isActive])
+}
+
+// Institution model - Educational institutions
+model Institution {
+  id          Int      @id @default(autoincrement())
+  name        String   // e.g., "Kairuki Institute"
+  slug        String   @unique
+  level       String   // e.g., "university"
+  logo        String?  // Institution logo URL
+  content     Json     // Page content
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  users       User[]
+  innovations Innovation[]
+
+  @@index([slug])
+  @@index([level])
+  @@index([isActive])
+}
+
+// Innovation model - Student innovations
+model Innovation {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  institutionId Int
+  title         String
+  description   String
+  mediaUrls     String[]    // Cloudinary URLs
+  tags          String[]    // Innovation tags
+  isPublished   Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  institution Institution @relation(fields: [institutionId], references: [id])
+
+  @@index([userId])
+  @@index([institutionId])
+  @@index([isPublished])
+  @@index([tags])
+}
+
+// Membership model - Club memberships
+model Membership {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  clubId    Int
+  status    String   // e.g., "active", "inactive", "pending"
+  joinedAt  DateTime @default(now())
+  expiresAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club Club @relation(fields: [clubId], references: [id])
+
+  @@unique([userId, clubId])
+  @@index([userId])
+  @@index([clubId])
+  @@index([status])
+}
+
+// Company model - Companies for job matching
+model Company {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  industry    String   // e.g., "tech"
+  skills      String[] // Required skills
+  logo        String?  // Company logo URL
+  content     Json     // Page content
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+
+  @@index([slug])
+  @@index([industry])
+  @@index([skills])
+  @@index([isActive])
+}
+
+// CV model - User CVs
+model CV {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  personal   Json     // Name, contact info
+  education  Json[]   // Education history
+  skills     String[] // Skills
+  experience Json[]   // Work experience
+  summary    String?  // Professional summary
+  isPublic   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([skills])
+  @@index([isPublic])
+}
+
+// Portfolio model - User portfolios
+model Portfolio {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String
+  mediaUrls   String[] // Cloudinary URLs
+  skills      String[] // Skills demonstrated
+  projectUrl  String?  // Live project URL
+  githubUrl   String?  // GitHub repository URL
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([skills])
+  @@index([isPublished])
+}
+
+// Product model - Marketplace products/services
+model Product {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String
+  price       Float
+  currency    String   // e.g., "TZS", "USD"
+  mediaUrls   String[] // Cloudinary URLs
+  category    String   // e.g., "services", "products"
+  location    String   // e.g., "Dar es Salaam, TZ"
+  tags        String[] // Product tags
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders    Order[]
+
+  @@index([userId])
+  @@index([category])
+  @@index([location])
+  @@index([tags])
+  @@index([isActive])
+  @@index([price])
+}
+
+// Order model - Product orders
+model Order {
+  id        Int      @id @default(autoincrement())
+  buyerId   Int
+  sellerId  Int
+  productId Int
+  quantity  Int      @default(1)
+  totalAmount Float
+  currency  String
+  status    String   // e.g., "pending", "confirmed", "shipped", "delivered", "cancelled"
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  buyer   User    @relation("UserOrders", fields: [buyerId], references: [id])
+  seller  User    @relation("UserSales", fields: [sellerId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+  payment Payment?
+
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([productId])
+  @@index([status])
+}
+
+// FeedItem model - Main feed system
+model FeedItem {
+  id          Int      @id @default(autoincrement())
+  type        String   // e.g., "portfolio", "product", "innovation", "provider", "club", "company"
+  contentId   Int      // ID of related content
+  userId      Int?     // Optional user (for user-generated content)
+  title       String
+  description String?
+  mediaUrls   String[] // Associated media
+  tags        String[] // Content tags
+  isPromoted  Boolean  @default(false) // For promoted/sponsored content
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  interactions Interaction[]
+
+  @@index([type])
+  @@index([contentId])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([isPromoted])
+  @@index([isActive])
+  @@index([tags])
+}
+
+// Interaction model - Feed interactions
+model Interaction {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  feedItemId Int
+  type       String   // e.g., "like", "comment", "share", "save"
+  content    String?  // Comment text or additional data
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedItem FeedItem @relation(fields: [feedItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, feedItemId, type]) // Prevent duplicate interactions
+  @@index([userId])
+  @@index([feedItemId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// Payment model - Payment transactions
+model Payment {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  orderId       Int?     // Optional - can be standalone payment
+  amount        Float
+  currency      String   // e.g., "TZS", "USD"
+  method        String   // e.g., "M-Pesa", "Stripe", "Airtel Money"
+  status        String   // e.g., "pending", "completed", "failed", "refunded"
+  transactionId String?  // External transaction ID
+  metadata      Json?    // Additional payment data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  user  User   @relation(fields: [userId], references: [id])
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@unique([orderId]) // One payment per order
+  @@index([userId])
+  @@index([orderId])
+  @@index([status])
+  @@index([method])
+  @@index([transactionId])
+}
