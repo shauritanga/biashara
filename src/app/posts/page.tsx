@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/Button'
 import { getAllPostsWithUsers, getAllFeedItemsWithUsers } from '@/app/actions/feed'
 import { MediaDisplay } from '@/components/feed/MediaDisplay'
+import { PostInteractions } from '@/components/feed/PostInteractions'
 import { formatRelativeTime } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -198,6 +199,9 @@ export default async function PostsPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Post Interactions */}
+                  <PostInteractions feedItemId={post.id} />
                 </CardContent>
               </Card>
             ))}
@@ -282,6 +286,9 @@ export default async function PostsPage() {
                     )}
                   </div>
                 )}
+
+                {/* Post Interactions */}
+                <PostInteractions feedItemId={item.id} />
               </CardContent>
             </Card>
           ))}

@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { ImagePreviewModal } from '@/components/ui/ImagePreviewModal'
+
 interface MediaDisplayProps {
   mediaUrls: string[]
   title?: string
@@ -20,11 +23,36 @@ function isValidImageUrl(url: string): boolean {
 }
 
 export function MediaDisplay({ mediaUrls, title }: MediaDisplayProps) {
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewIndex, setPreviewIndex] = useState(0)
+
   if (!mediaUrls || mediaUrls.length === 0) {
     return null
   }
 
+  const handleImageClick = (index: number) => {
+    // Only open preview for images, not videos
+    const imageUrls = mediaUrls.filter(url =>
+      !url.includes('.mp4') && !url.includes('.webm') && !url.includes('.mov')
+    )
+
+    if (imageUrls.length > 0) {
+      // Find the correct index in the image-only array
+      const imageIndex = imageUrls.findIndex(imageUrl => imageUrl === mediaUrls[index])
+      if (imageIndex !== -1) {
+        setPreviewIndex(imageIndex)
+        setPreviewOpen(true)
+      }
+    }
+  }
+
+  // Get only image URLs for preview modal
+  const imageUrls = mediaUrls.filter(url =>
+    !url.includes('.mp4') && !url.includes('.webm') && !url.includes('.mov')
+  )
+
   return (
+    <>
     <div className="mb-4">
       {mediaUrls.length === 1 ? (
         // Single media item
@@ -40,7 +68,8 @@ export function MediaDisplay({ mediaUrls, title }: MediaDisplayProps) {
             <img
               src={mediaUrls[0]}
               alt="Post media"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => handleImageClick(0)}
               onError={(e) => {
                 // Only log errors for external URLs to reduce console noise
                 if (mediaUrls[0].startsWith('http')) {
@@ -90,7 +119,8 @@ export function MediaDisplay({ mediaUrls, title }: MediaDisplayProps) {
                 <img
                   src={url}
                   alt={`Post media ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                  onClick={() => handleImageClick(index)}
                   onError={(e) => {
                     // Only log errors for external URLs to reduce console noise
                     if (url.startsWith('http')) {
@@ -126,5 +156,14 @@ export function MediaDisplay({ mediaUrls, title }: MediaDisplayProps) {
         </div>
       )}
     </div>
+
+      {/* Image Preview Modal */}
+      <ImagePreviewModal
+        images={imageUrls}
+        initialIndex={previewIndex}
+        isOpen={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+      />
+    </>
   )
 }
