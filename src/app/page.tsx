@@ -120,7 +120,7 @@ export default async function Home() {
           }
 
           return (
-            <Card key={item.id} variant="elevated" className="overflow-hidden">
+            <Card key={item.id} id={`post-${item.id}`} variant="elevated" className="overflow-hidden">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">

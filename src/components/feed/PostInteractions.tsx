@@ -120,22 +120,36 @@ export function PostInteractions({
 
   const handleShare = async () => {
     try {
-      // Copy link to clipboard
-      const url = `${window.location.origin}/posts/${feedItemId}`
-      await navigator.clipboard.writeText(url)
-      
+      // Create a shareable URL - use current page with a hash to the post
+      const url = `${window.location.origin}${window.location.pathname}#post-${feedItemId}`
+
+      // Try to use Web Share API if available (mobile devices)
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Check out this post on Glbiashara',
+          url: url
+        })
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(url)
+        alert('Link copied to clipboard!')
+      }
+
       // Record share interaction
       const result = await addShare(feedItemId)
       if (result.success) {
         setCounts(prev => ({ ...prev, shares: prev.shares + 1 }))
         setUserInteractions(prev => ({ ...prev, hasShared: true }))
-        
-        // Show feedback
-        alert('Link copied to clipboard!')
       }
     } catch (error) {
       console.error('Error sharing:', error)
-      alert('Failed to copy link')
+      // Fallback: just copy current page URL
+      try {
+        await navigator.clipboard.writeText(window.location.href)
+        alert('Page link copied to clipboard!')
+      } catch (clipboardError) {
+        alert('Unable to share post')
+      }
     }
   }
 

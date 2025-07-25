@@ -93,7 +93,7 @@ export default async function PostsPage() {
         {posts && posts.length > 0 ? (
           <div className="space-y-6">
             {posts.map((post) => (
-              <Card key={post.id} variant="elevated">
+              <Card key={post.id} id={`post-${post.id}`} variant="elevated">
                 <CardHeader>
                   <div className="flex items-start space-x-4">
                     {/* User Avatar */}
@@ -238,7 +238,7 @@ export default async function PostsPage() {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {allFeedItems?.map((item) => (
-            <Card key={item.id} variant="outlined" className="hover:shadow-lg transition-shadow">
+            <Card key={item.id} id={`post-${item.id}`} variant="outlined" className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
