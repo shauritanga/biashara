@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 export default function TestImageDisplayPage() {
   const [testUrl, setTestUrl] = useState('')
@@ -57,7 +57,7 @@ export default function TestImageDisplayPage() {
 
             <Button 
               onClick={() => testImageLoad(testCloudinaryUrl)}
-              variant="outline"
+             
               className="w-full"
             >
               Test Sample Cloudinary URL

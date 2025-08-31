@@ -1,11 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Badge } from '@/components/ui/badge'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 import { createPost } from '@/app/actions/posts'
-import { useRouter } from 'next/navigation'
 
 interface MediaFile {
   url: string
@@ -71,7 +75,7 @@ export function CreatePostForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <>
       <Card>
         <CardHeader>
           <CardTitle>Share Your Thoughts</CardTitle>
@@ -83,68 +87,69 @@ export function CreatePostForm() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
-            <div>
-              <label htmlFor="title" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Post Title *
-              </label>
-              <input
-                type="text"
+            <div className="space-y-2">
+              <Label htmlFor="title">Post Title *</Label>
+              <Input
                 id="title"
+                type="text"
                 required
                 value={formData.title}
                 onChange={(e) => handleInputChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100"
                 placeholder="What's on your mind?"
                 maxLength={100}
               />
-              <div className="mt-1 text-xs text-neutral-500">
+              <div className="text-sm text-muted-foreground">
                 {formData.title.length}/100 characters
               </div>
             </div>
 
             {/* Description */}
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Description *
-              </label>
-              <textarea
+            <div className="space-y-2">
+              <Label htmlFor="description">Description *</Label>
+              <Textarea
                 id="description"
                 required
-                rows={4}
+                rows={5}
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                className="w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100"
                 placeholder="Share more details about your post..."
                 maxLength={500}
+                className="resize-none"
               />
-              <div className="mt-1 text-xs text-neutral-500">
+              <div className="text-sm text-muted-foreground">
                 {formData.description.length}/500 characters
               </div>
             </div>
 
             {/* Tags */}
-            <div>
-              <label htmlFor="tags" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Tags
-              </label>
-              <input
-                type="text"
+            <div className="space-y-2">
+              <Label htmlFor="tags">Tags</Label>
+              <Input
                 id="tags"
+                type="text"
                 value={formData.tags}
                 onChange={(e) => handleInputChange('tags', e.target.value)}
-                className="w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100"
                 placeholder="technology, business, innovation (separate with commas)"
               />
-              <div className="mt-1 text-xs text-neutral-500">
+              <div className="text-sm text-muted-foreground">
                 Add relevant tags to help people discover your post
               </div>
+              {formData.tags && (
+                <div className="flex flex-wrap gap-2">
+                  {formData.tags.split(',').map((tag, index) => (
+                    tag.trim() && (
+                      <Badge key={index}>
+                        {tag.trim()}
+                      </Badge>
+                    )
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Media Upload */}
-            <div>
-              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Images & Videos
-              </label>
+            <div className="space-y-2">
+              <Label>Images & Videos</Label>
               <CloudinaryUpload
                 onUpload={handleMediaUpload}
                 maxFiles={5}
@@ -156,11 +161,9 @@ export function CreatePostForm() {
 
             {/* Preview */}
             {(formData.title || formData.description || mediaFiles.length > 0) && (
-              <div>
-                <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                  Preview
-                </h3>
-                <Card className="bg-neutral-50 dark:bg-neutral-800">
+              <div className="space-y-2">
+                <Label>Preview</Label>
+                <Card className="bg-muted/50">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg">{formData.title || 'Your post title'}</CardTitle>
                     <CardDescription>
@@ -220,11 +223,11 @@ export function CreatePostForm() {
             )}
 
             {/* Submit Buttons */}
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 type="button"
-                variant="outline"
-                className="flex-1"
+               
+                className="sm:flex-1"
                 onClick={() => router.back()}
                 disabled={isSubmitting}
               >
@@ -232,7 +235,7 @@ export function CreatePostForm() {
               </Button>
               <Button
                 type="submit"
-                className="flex-1"
+                className="sm:flex-1"
                 disabled={isSubmitting || !formData.title.trim() || !formData.description.trim()}
               >
                 {isSubmitting ? 'Publishing...' : 'Publish Post'}
@@ -243,12 +246,12 @@ export function CreatePostForm() {
       </Card>
 
       {/* Tips */}
-      <Card className="mt-6 bg-primary-50 dark:bg-primary-900/20">
+      <Card className="mt-6 bg-blue-50/50 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800">
         <CardContent className="pt-6">
-          <h3 className="font-semibold text-primary-900 dark:text-primary-100 mb-3">
+          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">
             💡 Tips for a Great Post
           </h3>
-          <ul className="space-y-2 text-sm text-primary-700 dark:text-primary-300">
+          <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
             <li>• Use a clear, engaging title that summarizes your post</li>
             <li>• Add relevant tags to help people discover your content</li>
             <li>• Share valuable insights or experiences from your profession</li>
@@ -257,6 +260,6 @@ export function CreatePostForm() {
           </ul>
         </CardContent>
       </Card>
-    </div>
+    </>
   )
 }

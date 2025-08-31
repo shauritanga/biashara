@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
@@ -75,7 +75,7 @@ export default async function CompaniesPage() {
           const brandColors = getBrandColors(company.name)
 
           return (
-            <Card key={company.id} variant="elevated" className={`overflow-hidden ${brandColors.bg} ${brandColors.border}`}>
+            <Card key={company.id} className={`overflow-hidden ${brandColors.bg} ${brandColors.border}`}>
               <CardHeader className="pb-4">
                 <div className="flex items-center space-x-4">
                   <div className={`flex h-16 w-16 items-center justify-center rounded-lg ${brandColors.bg}`}>
@@ -156,7 +156,7 @@ export default async function CompaniesPage() {
                 </div>
 
                 <div className="flex space-x-3 pt-2">
-                  <Button variant="outline" className="flex-1" size="sm" asChild>
+                  <Button className="flex-1" size="sm" asChild>
                     <Link href={`/companies/${company.slug}`}>
                       View Details
                     </Link>
@@ -208,7 +208,7 @@ export default async function CompaniesPage() {
                   List Your Business
                 </Link>
               </Button>
-              <Button variant="outline" asChild>
+              <Button asChild>
                 <Link href="/auth/register">
                   Join Network
                 </Link>

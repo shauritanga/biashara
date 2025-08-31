@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 interface SimilarUsersProps {
   users: Array<{
@@ -97,7 +97,7 @@ export function SimilarUsers({ users }: SimilarUsersProps) {
 
             {/* Action Buttons */}
             <div className="flex space-x-3">
-              <Button variant="outline" className="flex-1" size="sm">
+              <Button className="flex-1" size="sm">
                 View Profile
               </Button>
               <Button className="flex-1" size="sm">

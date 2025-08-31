@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 interface ProfileConnectionsProps {
@@ -53,7 +53,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
               <Button asChild>
                 <Link href="/providers">Browse Providers</Link>
               </Button>
-              <Button variant="outline" asChild>
+              <Button asChild>
                 <Link href="/clubs">Explore Clubs</Link>
               </Button>
             </div>
@@ -84,7 +84,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
               <h4 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                 Telecom Provider
               </h4>
-              <Card variant="outlined" className="hover:shadow-md transition-shadow">
+              <Card className="hover:shadow-md transition-shadow">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-neutral-800">
@@ -106,7 +106,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
                       </h5>
                       <p className="text-sm text-neutral-500">Telecommunications Provider</p>
                     </div>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button size="sm" asChild>
                       <Link href={`/providers/${provider.slug}`}>
                         View
                       </Link>
@@ -123,7 +123,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
               <h4 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                 Institution
               </h4>
-              <Card variant="outlined" className="hover:shadow-md transition-shadow">
+              <Card className="hover:shadow-md transition-shadow">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-neutral-800">
@@ -145,7 +145,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
                       </h5>
                       <p className="text-sm text-neutral-500">{institution.level}</p>
                     </div>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button size="sm" asChild>
                       <Link href={`/institutions/${institution.slug}`}>
                         View
                       </Link>
@@ -164,7 +164,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
               </h4>
               <div className="grid gap-3 sm:grid-cols-2">
                 {clubs.map((club) => (
-                  <Card key={club.id} variant="outlined" className="hover:shadow-md transition-shadow">
+                  <Card key={club.id} className="hover:shadow-md transition-shadow">
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-neutral-800">
@@ -186,7 +186,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
                           </h5>
                           <p className="text-xs text-neutral-500">{club.sport}</p>
                         </div>
-                        <Button variant="outline" size="sm" asChild>
+                        <Button size="sm" asChild>
                           <Link href={`/clubs/${club.slug}`}>
                             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -204,7 +204,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
           {/* Expand Network CTA */}
           <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700">
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="outline" asChild className="flex-1">
+              <Button asChild className="flex-1">
                 <Link href="/network">
                   <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -212,7 +212,7 @@ export function ProfileConnections({ provider, institution, clubs }: ProfileConn
                   Explore Network
                 </Link>
               </Button>
-              <Button variant="outline" asChild className="flex-1">
+              <Button asChild className="flex-1">
                 <Link href="/profile/edit">
                   <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

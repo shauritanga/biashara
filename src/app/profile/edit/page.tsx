@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { getUserProfile } from '@/app/actions/profile'
 import { getCurrentUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
@@ -49,7 +49,7 @@ export default async function ProfileEditPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" asChild>
+          <Button asChild>
             <Link href="/profile">
               <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

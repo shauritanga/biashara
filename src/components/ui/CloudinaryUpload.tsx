@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 
 interface MediaFile {
   url: string
@@ -262,7 +262,7 @@ export function CloudinaryUpload({
           
           <Button
             type="button"
-            variant="outline"
+           
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading || uploadedFiles.length >= maxFiles}
           >

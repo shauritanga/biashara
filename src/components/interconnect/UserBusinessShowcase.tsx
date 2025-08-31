@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { formatCurrency } from '@/lib/utils'
 
@@ -256,7 +256,7 @@ export function UserBusinessShowcase({
 
                 {/* Action Buttons */}
                 <div className="flex space-x-3">
-                  <Button variant="outline" className="flex-1" size="sm" asChild>
+                  <Button className="flex-1" size="sm" asChild>
                     <Link href={`/marketplace/products/${business.id}`}>
                       View Details
                     </Link>
@@ -273,7 +273,7 @@ export function UserBusinessShowcase({
         {/* View More */}
         {businesses.length >= 6 && (
           <div className="text-center mt-8">
-            <Button variant="outline" size="lg" asChild>
+            <Button size="lg" asChild>
               <Link href={`/marketplace?${entityType}=${entityName.toLowerCase()}`}>
                 View All {entityName} Connected Businesses
               </Link>
@@ -297,7 +297,7 @@ export function UserBusinessShowcase({
                     List Your Business
                   </Link>
                 </Button>
-                <Button variant="outline" asChild>
+                <Button asChild>
                   <Link href="/network">
                     Join Network
                   </Link>

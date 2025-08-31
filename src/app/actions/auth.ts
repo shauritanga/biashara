@@ -155,13 +155,15 @@ export async function loginUser(data: LoginData) {
   }
 }
 
-export async function logoutUser() {
+export async function logoutUser(_formData?: FormData) {
   try {
     await clearAuthCookie()
-    return { success: true }
+    // Redirect to home to ensure UI updates after logout
+    redirect('/')
   } catch (error) {
     console.error('Logout error:', error)
-    return { error: 'Logout failed. Please try again.' }
+    // On error, still redirect to home; optionally attach a query param
+    redirect('/?logout=failed')
   }
 }
 

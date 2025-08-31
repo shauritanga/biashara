@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 interface NetworkDashboardProps {
@@ -74,7 +74,7 @@ export function NetworkDashboard({ network }: NetworkDashboardProps) {
                 <p className="font-semibold text-neutral-900 dark:text-neutral-100">
                   {user.provider.name}
                 </p>
-                <Button variant="outline" size="sm" className="mt-2" asChild>
+                <Button size="sm" className="mt-2" asChild>
                   <Link href={`/providers/${user.provider.slug}`}>
                     View Services
                   </Link>
@@ -137,7 +137,7 @@ export function NetworkDashboard({ network }: NetworkDashboardProps) {
                   +{user.clubs.length - 2} more clubs
                 </p>
               )}
-              <Button variant="outline" size="sm" className="w-full mt-2" asChild>
+              <Button size="sm" className="w-full mt-2" asChild>
                 <Link href="/clubs">
                   View All Clubs
                 </Link>
@@ -189,7 +189,7 @@ export function NetworkDashboard({ network }: NetworkDashboardProps) {
                 <p className="text-sm text-neutral-500">
                   {user.institution.type}
                 </p>
-                <Button variant="outline" size="sm" className="mt-2" asChild>
+                <Button size="sm" className="mt-2" asChild>
                   <Link href={`/institutions/${user.institution.slug}`}>
                     View Details
                   </Link>
@@ -253,7 +253,7 @@ export function NetworkDashboard({ network }: NetworkDashboardProps) {
           
           {similarUsers.length > 4 && (
             <div className="mt-4 text-center">
-              <Button variant="outline" asChild>
+              <Button asChild>
                 <Link href="/network#similar-users">
                   View All {similarUsers.length} Connections
                 </Link>
@@ -284,17 +284,17 @@ export function NetworkDashboard({ network }: NetworkDashboardProps) {
           </div>
           
           <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <Button variant="outline" size="sm" asChild>
+            <Button size="sm" asChild>
               <Link href="/marketplace?skills=true">
                 Find Related Products
               </Link>
             </Button>
-            <Button variant="outline" size="sm" asChild>
+            <Button size="sm" asChild>
               <Link href="/jobs?skills=true">
                 Find Related Jobs
               </Link>
             </Button>
-            <Button variant="outline" size="sm" asChild>
+            <Button size="sm" asChild>
               <Link href="/network?skills=true">
                 Find Similar People
               </Link>

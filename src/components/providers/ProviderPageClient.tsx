@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { PurchaseModal } from './PurchaseModal'
 import { formatCurrency } from '@/lib/utils'
 
@@ -45,7 +45,7 @@ export function ProviderPageClient({ provider }: ProviderPageClientProps) {
       {provider.services && provider.services.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {provider.services.map((service, index) => (
-            <Card key={index} variant="elevated" className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
+            <Card key={index} className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">

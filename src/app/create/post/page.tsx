@@ -10,23 +10,25 @@ export default async function CreatePostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+    <div className="min-h-screen bg-white dark:bg-neutral-900">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary-500 to-accent-500 py-6">
+      <div className="bg-primary-600 py-8">
         <div className="container-mobile">
           <div className="text-center text-white">
-            <h1 className="text-2xl font-bold md:text-3xl">
+            <h1 className="text-2xl font-bold text-white">
               Create a Post
             </h1>
-            <p className="mt-2 text-primary-100">
-              Share your thoughts with your network
+            <p className="mt-2 text-white">
+              Share your thoughts and updates with your network
             </p>
           </div>
         </div>
       </div>
 
       <div className="container-mobile py-8">
-        <CreatePostForm />
+        <div className="mx-auto max-w-2xl">
+          <CreatePostForm />
+        </div>
       </div>
     </div>
   )

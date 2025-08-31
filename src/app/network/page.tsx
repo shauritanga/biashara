@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { getPersonalizedRecommendations, getUserNetwork } from '@/app/actions/connections'
 import { NetworkDashboard } from '@/components/network/NetworkDashboard'
 import { RecommendationCards } from '@/components/network/RecommendationCards'
@@ -107,16 +107,16 @@ export default async function NetworkPage() {
   } : null
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+    <div className="min-h-screen bg-white dark:bg-neutral-900">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary-500 to-accent-500 py-8 md:py-12">
+      <div className="bg-primary-600 py-8">
         <div className="container-mobile">
           <div className="text-center text-white">
-            <h1 className="text-3xl font-bold md:text-4xl">
+            <h1 className="text-3xl font-bold text-white">
               Your Business Network
             </h1>
-            <p className="mt-2 text-primary-100">
-              Connect with companies, clubs, institutions, and like-minded professionals
+            <p className="mt-2 text-lg text-white">
+              Connect with companies, clubs, institutions, and professionals
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default async function NetworkPage() {
         {/* Network Overview */}
         {network && (
           <section>
-            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6">
               Your Connections
             </h2>
             <NetworkDashboard network={network} />
@@ -136,7 +136,7 @@ export default async function NetworkPage() {
         {/* Personalized Recommendations */}
         {recommendations && (
           <section>
-            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6">
               Recommended for You
             </h2>
             <RecommendationCards recommendations={recommendations} />
@@ -146,7 +146,7 @@ export default async function NetworkPage() {
         {/* Similar Users */}
         {network?.similarUsers && network.similarUsers.length > 0 && (
           <section>
-            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6">
               Connect with Similar Professionals
             </h2>
             <SimilarUsers users={network.similarUsers} />
@@ -155,76 +155,76 @@ export default async function NetworkPage() {
 
         {/* Quick Actions */}
         <section>
-          <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
+          <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6">
             Explore More
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card className="text-center p-6 hover:shadow-md transition-shadow cursor-pointer border border-neutral-200 dark:border-neutral-700">
               <div className="flex flex-col items-center space-y-3">
-                <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
+                <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="font-semibold text-neutral-900 dark:text-white">
                     Companies
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
                     Explore telecom providers
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card className="text-center p-6 hover:shadow-md transition-shadow cursor-pointer border border-neutral-200 dark:border-neutral-700">
               <div className="flex flex-col items-center space-y-3">
-                <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center text-green-600 dark:bg-green-900/20 dark:text-green-400">
+                <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center text-green-600 dark:bg-green-900/30 dark:text-green-400">
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="font-semibold text-neutral-900 dark:text-white">
                     Sports Clubs
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
                     Join your favorite teams
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card className="text-center p-6 hover:shadow-md transition-shadow cursor-pointer border border-neutral-200 dark:border-neutral-700">
               <div className="flex flex-col items-center space-y-3">
-                <div className="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
+                <div className="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="font-semibold text-neutral-900 dark:text-white">
                     Universities
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
                     Connect with institutions
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card className="text-center p-6 hover:shadow-md transition-shadow cursor-pointer border border-neutral-200 dark:border-neutral-700">
               <div className="flex flex-col items-center space-y-3">
-                <div className="h-12 w-12 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 dark:bg-orange-900/20 dark:text-orange-400">
+                <div className="h-12 w-12 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="font-semibold text-neutral-900 dark:text-white">
                     Marketplace
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
                     Buy & sell products
                   </p>
                 </div>
@@ -236,14 +236,14 @@ export default async function NetworkPage() {
         {/* Network Activity Feed */}
         {network?.networkActivities && network.networkActivities.length > 0 && (
           <section>
-            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6">
               Network Activity
             </h2>
             <div className="space-y-4">
               {network.networkActivities.slice(0, 10).map((activity) => (
-                <Card key={activity.id} className="p-4">
+                <Card key={activity.id} className="p-4 border border-neutral-200 dark:border-neutral-700">
                   <div className="flex items-start space-x-3">
-                    <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center dark:bg-primary-900/20">
+                    <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center dark:bg-primary-900/30">
                       {activity.user?.avatar ? (
                         <img
                           src={activity.user.avatar}
@@ -258,17 +258,17 @@ export default async function NetworkPage() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <span className="font-semibold text-neutral-900 dark:text-neutral-100">
+                        <span className="font-semibold text-neutral-900 dark:text-white">
                           {activity.user?.firstName} {activity.user?.lastName}
                         </span>
-                        <span className="text-sm text-neutral-500">
+                        <span className="text-sm text-neutral-600 dark:text-neutral-400">
                           {activity.user?.profession}
                         </span>
                       </div>
-                      <p className="text-neutral-700 dark:text-neutral-300 mt-1">
+                      <p className="text-neutral-800 dark:text-neutral-200 mt-1">
                         {activity.title}
                       </p>
-                      <p className="text-sm text-neutral-500 mt-1">
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
                         {new Date(activity.createdAt).toLocaleDateString()}
                       </p>
                     </div>

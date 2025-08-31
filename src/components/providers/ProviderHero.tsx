@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { formatNumber } from '@/lib/utils'
 
 interface ProviderHeroProps {
@@ -106,7 +106,7 @@ export function ProviderHero({ provider, content }: ProviderHeroProps) {
             </Button>
             {content?.website && (
               <Button 
-                variant="outline" 
+                
                 size="lg" 
                 className="px-8"
                 asChild

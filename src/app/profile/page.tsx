@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { getUserProfile } from '@/app/actions/profile'
 import { getCurrentUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
@@ -20,27 +20,31 @@ export default async function ProfilePage() {
   
   if (!profileResult.success) {
     return (
-      <div className="container-mobile py-6">
-        <Card className="text-center py-12">
-          <CardContent>
-            <div className="flex flex-col items-center space-y-4">
-              <svg className="h-16 w-16 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                  Profile Error
-                </h3>
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  {profileResult.error || 'Failed to load profile'}
-                </p>
+      <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
+        <div className="container-mobile py-12">
+          <Card className="text-center py-16 shadow-xl border-0">
+            <CardContent>
+              <div className="flex flex-col items-center space-y-6">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-100 text-red-500 dark:bg-red-900/30">
+                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+                    Profile Error
+                  </h3>
+                  <p className="text-neutral-700 dark:text-neutral-300 max-w-md">
+                    {profileResult.error || 'Failed to load profile'}
+                  </p>
+                </div>
+                <Button size="lg" asChild>
+                  <Link href="/">Go Home</Link>
+                </Button>
               </div>
-              <Button asChild>
-                <Link href="/">Go Home</Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     )
   }
@@ -48,45 +52,46 @@ export default async function ProfilePage() {
   const profile = profileResult.data
 
   return (
-    <div className="container-mobile py-6">
-      {/* Profile Header */}
-      <ProfileHeader profile={{
-        ...profile,
-        profession: profile.profession || undefined,
-        businessType: profile.businessType || undefined,
-        avatar: profile.avatar || undefined,
-        provider: profile.provider ? {
-          ...profile.provider,
-          logo: profile.provider.logo || undefined
-        } : profile.provider,
-        institution: profile.institution ? {
-          ...profile.institution,
-          logo: profile.institution.logo || undefined
-        } : profile.institution
-      }} />
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
+      <div className="container-mobile py-8">
+        {/* Profile Header */}
+        <ProfileHeader profile={{
+          ...profile,
+          profession: profile.profession || undefined,
+          businessType: profile.businessType || undefined,
+          avatar: profile.avatar || undefined,
+          provider: profile.provider ? {
+            ...profile.provider,
+            logo: profile.provider.logo || undefined
+          } : profile.provider,
+          institution: profile.institution ? {
+            ...profile.institution,
+            logo: profile.institution.logo || undefined
+          } : profile.institution
+        }} />
 
-      {/* Profile Stats */}
-      <div className="mt-8">
-        <ProfileStats stats={profile.stats} />
-      </div>
+        {/* Profile Stats */}
+        <div className="mt-10">
+          <ProfileStats stats={profile.stats} />
+        </div>
 
-      {/* Profile Content Tabs */}
-      <div className="mt-8">
-        <ProfileContent
-          posts={profile.feedItems.map(item => ({
-            ...item,
-            description: item.description || undefined
-          }))}
-          products={profile.products}
-          portfolios={profile.portfolios.map(portfolio => ({
-            ...portfolio,
-            projectUrl: portfolio.projectUrl || undefined
-          }))}
-        />
-      </div>
+        {/* Profile Content Tabs */}
+        <div className="mt-10">
+          <ProfileContent
+            posts={profile.feedItems.map(item => ({
+              ...item,
+              description: item.description || undefined
+            }))}
+            products={profile.products}
+            portfolios={profile.portfolios.map(portfolio => ({
+              ...portfolio,
+              projectUrl: portfolio.projectUrl || undefined
+            }))}
+          />
+        </div>
 
-      {/* Connections Section */}
-      <div className="mt-8">
+        {/* Connections Section */}
+        <div className="mt-10">
         <ProfileConnections
           provider={profile.provider ? {
             ...profile.provider,
@@ -106,7 +111,7 @@ export default async function ProfilePage() {
       {/* Quick Actions */}
       <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
         <Card className="p-4 text-center hover:shadow-lg transition-shadow">
-          <Button variant="ghost" className="w-full h-auto flex-col space-y-2 p-4" asChild>
+          <Button className="w-full h-auto flex-col space-y-2 p-4" asChild>
             <Link href="/create/post">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,7 +124,7 @@ export default async function ProfilePage() {
         </Card>
         
         <Card className="p-4 text-center hover:shadow-lg transition-shadow">
-          <Button variant="ghost" className="w-full h-auto flex-col space-y-2 p-4" asChild>
+          <Button className="w-full h-auto flex-col space-y-2 p-4" asChild>
             <Link href="/create/product">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +137,7 @@ export default async function ProfilePage() {
         </Card>
         
         <Card className="p-4 text-center hover:shadow-lg transition-shadow">
-          <Button variant="ghost" className="w-full h-auto flex-col space-y-2 p-4" asChild>
+          <Button className="w-full h-auto flex-col space-y-2 p-4" asChild>
             <Link href="/create/portfolio">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,7 +150,7 @@ export default async function ProfilePage() {
         </Card>
         
         <Card className="p-4 text-center hover:shadow-lg transition-shadow">
-          <Button variant="ghost" className="w-full h-auto flex-col space-y-2 p-4" asChild>
+          <Button className="w-full h-auto flex-col space-y-2 p-4" asChild>
             <Link href="/profile/edit">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +186,7 @@ export default async function ProfilePage() {
                     Complete Profile
                   </Link>
                 </Button>
-                <Button variant="outline" asChild>
+                <Button asChild>
                   <Link href="/network">
                     Explore Network
                   </Link>
@@ -191,6 +196,7 @@ export default async function ProfilePage() {
           </Card>
         </div>
       )}
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface MediaFile {
   url: string

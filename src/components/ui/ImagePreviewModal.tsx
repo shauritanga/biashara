@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 
 interface ImagePreviewModalProps {
   images: string[]
@@ -92,7 +92,7 @@ export function ImagePreviewModal({ images, initialIndex = 0, isOpen, onClose }:
           {currentIndex + 1} of {images.length}
         </div>
         <Button
-          variant="ghost"
+         
           size="sm"
           onClick={onClose}
           className="text-white hover:bg-white/20"
@@ -107,7 +107,7 @@ export function ImagePreviewModal({ images, initialIndex = 0, isOpen, onClose }:
       {images.length > 1 && (
         <>
           <Button
-            variant="ghost"
+           
             size="sm"
             onClick={goToPrevious}
             className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 p-3"
@@ -117,7 +117,7 @@ export function ImagePreviewModal({ images, initialIndex = 0, isOpen, onClose }:
             </svg>
           </Button>
           <Button
-            variant="ghost"
+           
             size="sm"
             onClick={goToNext}
             className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 p-3"

@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { LegacyInput } from '@/components/ui/LegacyInput'
 import { purchaseService } from '@/app/actions/providers'
 import { formatCurrency, validatePhone } from '@/lib/utils'
 
@@ -165,7 +165,7 @@ export function PurchaseModal({ isOpen, onClose, service, provider }: PurchaseMo
               </div>
 
               {/* Phone Number Input */}
-              <Input
+              <LegacyInput
                 label="Phone Number"
                 name="phoneNumber"
                 value={formData.phoneNumber}
@@ -214,7 +214,7 @@ export function PurchaseModal({ isOpen, onClose, service, provider }: PurchaseMo
               )}
 
               <div className="flex space-x-3">
-                <Button variant="outline" onClick={handleClose} className="flex-1">
+                <Button onClick={handleClose} className="flex-1">
                   Cancel
                 </Button>
                 <Button onClick={() => setStep(2)} className="flex-1">
@@ -261,16 +261,15 @@ export function PurchaseModal({ isOpen, onClose, service, provider }: PurchaseMo
               </div>
 
               <div className="flex space-x-3">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
+                <Button onClick={() => setStep(1)} className="flex-1">
                   Back
                 </Button>
                 <Button 
-                  onClick={handlePurchase} 
+                  onClick={handlePurchase}
                   className="flex-1"
-                  isLoading={isLoading}
                   disabled={isLoading}
                 >
-                  Purchase Now
+                  {isLoading ? 'Processing...' : 'Purchase Now'}
                 </Button>
               </div>
             </div>

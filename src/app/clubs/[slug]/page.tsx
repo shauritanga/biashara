@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { ClubHero } from '@/components/clubs/ClubHero'
 import { ClubStats } from '@/components/clubs/ClubStats'

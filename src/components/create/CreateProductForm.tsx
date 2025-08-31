@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { CloudinaryUpload } from '@/components/ui/CloudinaryUpload'
 import { createProduct } from '@/app/actions/posts'
 import { useRouter } from 'next/navigation'
@@ -308,7 +308,7 @@ export function CreateProductForm() {
             <div className="flex space-x-4">
               <Button
                 type="button"
-                variant="outline"
+               
                 className="flex-1"
                 onClick={() => router.back()}
                 disabled={isSubmitting}

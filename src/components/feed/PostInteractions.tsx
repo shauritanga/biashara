@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { 
   toggleLike, 
   toggleBookmark, 
@@ -260,7 +260,6 @@ export function PostInteractions({
               type="submit"
               size="sm"
               disabled={!newComment.trim() || isSubmittingComment}
-              isLoading={isSubmittingComment}
             >
               Post
             </Button>

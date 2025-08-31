@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { MediaDisplay } from '@/components/feed/MediaDisplay'
 import { formatRelativeTime, formatCurrency } from '@/lib/utils'
 import Link from 'next/link'
@@ -73,7 +73,7 @@ export function ProfileContent({ posts, products, portfolios }: ProfileContentPr
           <div className="space-y-6">
             {posts.length > 0 ? (
               posts.map((post) => (
-                <Card key={post.id} variant="outlined">
+                <Card key={post.id}>
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -133,7 +133,7 @@ export function ProfileContent({ posts, products, portfolios }: ProfileContentPr
           <div className="grid gap-6 md:grid-cols-2">
             {products.length > 0 ? (
               products.map((product) => (
-                <Card key={product.id} variant="outlined">
+                <Card key={product.id}>
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg">{product.title}</CardTitle>
                     <CardDescription>{product.description}</CardDescription>
@@ -199,7 +199,7 @@ export function ProfileContent({ posts, products, portfolios }: ProfileContentPr
           <div className="grid gap-6 md:grid-cols-2">
             {portfolios.length > 0 ? (
               portfolios.map((portfolio) => (
-                <Card key={portfolio.id} variant="outlined">
+                <Card key={portfolio.id}>
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg">{portfolio.title}</CardTitle>
                     <CardDescription>{portfolio.description}</CardDescription>
@@ -214,7 +214,7 @@ export function ProfileContent({ posts, products, portfolios }: ProfileContentPr
                     
                     <div className="flex items-center justify-between mb-3">
                       {portfolio.projectUrl && (
-                        <Button variant="outline" size="sm" asChild>
+                        <Button size="sm" asChild>
                           <a href={portfolio.projectUrl} target="_blank" rel="noopener noreferrer">
                             <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

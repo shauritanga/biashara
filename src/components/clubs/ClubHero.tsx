@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 
 interface ClubHeroProps {
   club: {
@@ -85,7 +85,7 @@ export function ClubHero({ club, content }: ClubHeroProps) {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
+                
                 className="border-white text-white hover:bg-white hover:text-primary-600"
               >
                 Latest News

@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 interface InterconnectivityShowcaseProps {
@@ -208,7 +208,7 @@ export function InterconnectivityShowcase({ stats }: InterconnectivityShowcasePr
                   Explore Your Network
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button size="lg" asChild>
                 <Link href="/marketplace/create">
                   List Your Business
                 </Link>

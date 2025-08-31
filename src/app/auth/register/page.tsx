@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { LegacyInput } from '@/components/ui/LegacyInput'
 import { validateEmail, validatePhone } from '@/lib/utils'
 
 const countries = [
@@ -223,70 +225,96 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="container-mobile flex min-h-screen items-center justify-center py-12">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary-500 text-white">
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-            </svg>
-          </div>
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Join Glbiashara to connect and grow your business
-          </CardDescription>
-          
-          {/* Progress indicator */}
-          <div className="mt-4 flex items-center justify-center space-x-2">
-            <div className={`h-2 w-8 rounded-full ${step >= 1 ? 'bg-primary-500' : 'bg-neutral-200'}`} />
-            <div className={`h-2 w-8 rounded-full ${step >= 2 ? 'bg-primary-500' : 'bg-neutral-200'}`} />
-          </div>
-        </CardHeader>
+    <div className="min-h-screen bg-gradient-to-br from-accent-50 via-white to-primary-50 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800">
+      <div className="container-mobile flex min-h-screen items-center justify-center py-12">
+        <Card className="w-full max-w-lg">
+          <CardHeader className="text-center pb-6">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg">
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+            </div>
+            <CardTitle className="text-2xl">Create your account</CardTitle>
+            <CardDescription className="text-base">
+              Join Glbiashara to connect and grow your business
+            </CardDescription>
+
+            {/* Progress indicator */}
+            <div className="mt-6 flex items-center justify-center space-x-3">
+              <div className="flex items-center space-x-2">
+                <div className={`h-3 w-3 rounded-full ${step >= 1 ? 'bg-accent-500' : 'bg-neutral-300'} transition-colors`} />
+                <span className={`text-xs font-medium ${step >= 1 ? 'text-accent-600' : 'text-neutral-500'}`}>Basic Info</span>
+              </div>
+              <div className={`h-0.5 w-8 ${step >= 2 ? 'bg-accent-500' : 'bg-neutral-300'} transition-colors`} />
+              <div className="flex items-center space-x-2">
+                <div className={`h-3 w-3 rounded-full ${step >= 2 ? 'bg-accent-500' : 'bg-neutral-300'} transition-colors`} />
+                <span className={`text-xs font-medium ${step >= 2 ? 'text-accent-600' : 'text-neutral-500'}`}>Profile</span>
+              </div>
+            </div>
+          </CardHeader>
         
         <CardContent>
           {errors.general && (
-            <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
-              {errors.general}
+            <div className="mb-6 rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300">
+              <div className="flex items-center space-x-2">
+                <svg className="h-4 w-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{errors.general}</span>
+              </div>
             </div>
           )}
 
           {step === 1 && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <Input
-                  label="First Name"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  error={errors.firstName}
-                  placeholder="John"
-                />
-                <Input
-                  label="Last Name"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  error={errors.lastName}
-                  placeholder="Doe"
-                />
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <LegacyInput
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="John"
+                    className={errors.firstName ? "border-destructive" : ""}
+                  />
+                  {errors.firstName && (
+                    <p className="text-sm text-destructive">{errors.firstName}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <LegacyInput
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Doe"
+                    className={errors.lastName ? "border-destructive" : ""}
+                  />
+                  {errors.lastName && (
+                    <p className="text-sm text-destructive">{errors.lastName}</p>
+                  )}
+                </div>
               </div>
               
-              <Input
-                label="Email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                error={errors.email}
-                placeholder="john@example.com"
-                leftIcon={
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                  </svg>
-                }
-              />
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <LegacyInput
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="john@example.com"
+                  className={errors.email ? "border-destructive" : ""}
+                />
+                {errors.email && (
+                  <p className="text-sm text-destructive">{errors.email}</p>
+                )}
+              </div>
               
-              <Input
+              <LegacyInput
                 label="Phone Number"
                 type="tel"
                 name="phone"
@@ -302,7 +330,7 @@ export default function RegisterPage() {
                 }
               />
               
-              <Input
+              <LegacyInput
                 label="Password"
                 type="password"
                 name="password"
@@ -317,7 +345,7 @@ export default function RegisterPage() {
                 }
               />
               
-              <Input
+              <LegacyInput
                 label="Confirm Password"
                 type="password"
                 name="confirmPassword"
@@ -470,7 +498,7 @@ export default function RegisterPage() {
               <div className="flex space-x-3">
                 <Button
                   type="button"
-                  variant="outline"
+                 
                   onClick={handleBack}
                   className="flex-1"
                 >
@@ -479,10 +507,9 @@ export default function RegisterPage() {
                 <Button
                   type="submit"
                   className="flex-1"
-                  isLoading={isLoading}
                   disabled={isLoading}
                 >
-                  Create Account
+                  {isLoading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </div>
             </form>
@@ -500,7 +527,8 @@ export default function RegisterPage() {
             </p>
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }

@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { LegacyInput } from '@/components/ui/LegacyInput'
 import { updateUserProfile } from '@/app/actions/profile'
 
 interface ProfileEditFormProps {
@@ -162,7 +162,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
           )}
 
           <div className="grid gap-4 md:grid-cols-2">
-            <Input
+            <LegacyInput
               label="First Name"
               name="firstName"
               value={formData.firstName}
@@ -171,7 +171,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
               placeholder="Enter your first name"
             />
 
-            <Input
+            <LegacyInput
               label="Last Name"
               name="lastName"
               value={formData.lastName}
@@ -182,7 +182,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <Input
+            <LegacyInput
               label="Email"
               type="email"
               name="email"
@@ -192,7 +192,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
               placeholder="Enter your email"
             />
 
-            <Input
+            <LegacyInput
               label="Phone"
               type="tel"
               name="phone"
@@ -203,7 +203,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
             />
           </div>
 
-          <Input
+          <LegacyInput
             label="Avatar URL (Optional)"
             name="avatar"
             value={formData.avatar}
@@ -223,7 +223,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Input
+          <LegacyInput
             label="Profession"
             name="profession"
             value={formData.profession}
@@ -254,9 +254,9 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
             <label className="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">
               Skills & Expertise
             </label>
-            <Input
+            <LegacyInput
               value={skillInput}
-              onChange={(e) => setSkillInput(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSkillInput(e.target.value)}
               onKeyDown={handleAddSkill}
               placeholder="Type a skill and press Enter to add"
               helperText="Add skills that describe your expertise"
@@ -291,7 +291,7 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
       <div className="flex flex-col sm:flex-row gap-4 sm:justify-end">
         <Button
           type="button"
-          variant="outline"
+         
           onClick={() => router.push('/profile')}
           disabled={isLoading}
         >
@@ -299,10 +299,9 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
         </Button>
         <Button
           type="submit"
-          isLoading={isLoading}
           disabled={isLoading}
         >
-          Save Changes
+          {isLoading ? 'Saving...' : 'Save Changes'}
         </Button>
       </div>
     </form>

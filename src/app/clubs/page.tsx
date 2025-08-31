@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
@@ -50,7 +50,7 @@ export default async function ClubsPage() {
           const content = club.content as any
           
           return (
-            <Card key={club.id} variant="elevated" className="overflow-hidden">
+            <Card key={club.id} className="overflow-hidden">
               <CardHeader className="pb-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary-50 dark:bg-primary-900/20">
@@ -131,7 +131,7 @@ export default async function ClubsPage() {
                 </div>
 
                 <div className="flex space-x-3 pt-2">
-                  <Button variant="outline" className="flex-1" size="sm" asChild>
+                  <Button className="flex-1" size="sm" asChild>
                     <Link href={`/clubs/${club.slug}`}>
                       View Club
                     </Link>
@@ -183,7 +183,7 @@ export default async function ClubsPage() {
                   Join Community
                 </Link>
               </Button>
-              <Button variant="outline" asChild>
+              <Button asChild>
                 <Link href="/network">
                   Explore Network
                 </Link>

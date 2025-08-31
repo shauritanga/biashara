@@ -38,6 +38,7 @@ export default async function RootLayout({
   // Transform JWT payload to match component expectations
   const user = jwtUser ? {
     id: jwtUser.userId,
+    email: jwtUser.email,
     firstName: undefined,
     lastName: undefined,
     avatar: undefined
