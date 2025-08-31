@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { LegacyInput } from '@/components/ui/LegacyInput'
+import { ProfilePictureUpload } from './ProfilePictureUpload'
 import { updateUserProfile } from '@/app/actions/profile'
 
 interface ProfileEditFormProps {
@@ -65,6 +66,10 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
+  }
+
+  const handleAvatarChange = (avatarUrl: string) => {
+    setFormData(prev => ({ ...prev, avatar: avatarUrl }))
   }
 
   const handleAddSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -133,7 +138,8 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
       })
 
       if (result.success) {
-        router.push('/profile')
+        // Refresh the page to update the header avatar before navigating
+        window.location.href = '/profile'
       } else {
         setErrors({ general: result.error || 'Failed to update profile' })
       }
@@ -203,13 +209,11 @@ export function ProfileEditForm({ profile }: ProfileEditFormProps) {
             />
           </div>
 
-          <LegacyInput
-            label="Avatar URL (Optional)"
-            name="avatar"
-            value={formData.avatar}
-            onChange={handleInputChange}
-            placeholder="Enter image URL for your profile picture"
-            helperText="You can upload an image to a service like Cloudinary and paste the URL here"
+          {/* Profile Picture Upload */}
+          <ProfilePictureUpload
+            currentAvatar={formData.avatar}
+            onAvatarChange={handleAvatarChange}
+            userName={`${formData.firstName} ${formData.lastName}`.trim() || 'User'}
           />
         </CardContent>
       </Card>

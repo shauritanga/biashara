@@ -5,18 +5,20 @@ import { Label } from './label'
 interface LegacyInputProps {
   label?: string
   error?: string
+  helperText?: string
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   [key: string]: any
 }
 
-export const LegacyInput: React.FC<LegacyInputProps> = ({ 
-  label, 
-  error, 
-  leftIcon, 
-  rightIcon, 
+export const LegacyInput: React.FC<LegacyInputProps> = ({
+  label,
+  error,
+  helperText,
+  leftIcon,
+  rightIcon,
   className,
-  ...props 
+  ...props
 }) => {
   const id = props.id || props.name || 'input'
   
@@ -42,6 +44,9 @@ export const LegacyInput: React.FC<LegacyInputProps> = ({
       </div>
       {error && (
         <p className="text-sm text-destructive">{error}</p>
+      )}
+      {helperText && !error && (
+        <p className="text-sm text-muted-foreground">{helperText}</p>
       )}
     </div>
   )

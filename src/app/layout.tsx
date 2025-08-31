@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { getCurrentUser } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,14 +36,41 @@ export default async function RootLayout({
 }>) {
   const jwtUser = await getCurrentUser();
 
-  // Transform JWT payload to match component expectations
-  const user = jwtUser ? {
-    id: jwtUser.userId,
-    email: jwtUser.email,
-    firstName: undefined,
-    lastName: undefined,
-    avatar: undefined
-  } : null;
+  // Get full user profile data if user is authenticated
+  let user = null;
+  if (jwtUser) {
+    try {
+      const userProfile = await prisma.user.findUnique({
+        where: { id: jwtUser.userId },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          avatar: true
+        }
+      });
+
+      // Transform the user data to match the expected interface
+      user = userProfile ? {
+        id: userProfile.id,
+        email: userProfile.email,
+        firstName: userProfile.firstName || undefined,
+        lastName: userProfile.lastName || undefined,
+        avatar: userProfile.avatar || undefined
+      } : null;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      // Fallback to basic JWT data
+      user = {
+        id: jwtUser.userId,
+        email: jwtUser.email,
+        firstName: undefined,
+        lastName: undefined,
+        avatar: undefined
+      };
+    }
+  }
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>

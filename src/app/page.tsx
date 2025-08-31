@@ -30,7 +30,7 @@ export default async function Home() {
         {/* Welcome Section */}
         <div className="mb-10 text-center">
           <h1 className="mb-4 text-3xl font-bold text-neutral-900 dark:text-neutral-100 md:text-4xl lg:text-5xl">
-            Welcome to <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">Glbiashara</span>
+            Welcome to <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text">Glbiashara</span>
           </h1>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto">
             Discover opportunities, connect with your community, and grow your business in Tanzania and beyond
