@@ -20,10 +20,38 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get the form data
-    const formData = await request.formData()
+    // Log request details for debugging
+    console.log('Upload request received:', {
+      contentLength: request.headers.get('content-length'),
+      contentType: request.headers.get('content-type'),
+      userAgent: request.headers.get('user-agent')
+    })
+
+    // Get the form data with timeout handling
+    let formData: FormData
+    try {
+      formData = await Promise.race([
+        request.formData(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('FormData parsing timeout')), 30000)
+        )
+      ])
+    } catch (error) {
+      console.error('FormData parsing error:', error)
+      return NextResponse.json(
+        { error: 'Failed to parse upload data. File may be too large for your Vercel plan.' },
+        { status: 413 }
+      )
+    }
+
     const file = formData.get('file') as File | null
     const type = formData.get('type') as string | null
+
+    console.log('File details:', {
+      name: file?.name,
+      size: file?.size,
+      type: file?.type
+    })
 
     // Validate file exists
     if (!file) {
@@ -44,7 +72,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate file size
+    // Validate file size with Vercel plan considerations
     if (isImage && file.size > MAX_IMAGE_SIZE) {
       return NextResponse.json(
         { error: 'Image size exceeds the 5MB limit' },
@@ -59,24 +87,64 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Additional check for Vercel Hobby plan limitations (4.5MB request body limit)
+    const isVercelHobby = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'preview'
+    if (isVercelHobby && file.size > 4 * 1024 * 1024) { // 4MB to be safe
+      return NextResponse.json(
+        {
+          error: 'File too large for current hosting plan. Please use files under 4MB or upgrade to Vercel Pro.',
+          code: 'VERCEL_LIMIT_EXCEEDED'
+        },
+        { status: 413 }
+      )
+    }
+
     // Create unique filename
     const fileExtension = file.name.split('.').pop()
     const fileName = `${uuidv4()}.${fileExtension}`
 
-    // Convert file to buffer
-    const fileBuffer = Buffer.from(await file.arrayBuffer())
+    // Convert file to buffer with timeout
+    let fileBuffer: Buffer
+    try {
+      console.log('Converting file to buffer...')
+      const arrayBuffer = await Promise.race([
+        file.arrayBuffer(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('File buffer conversion timeout')), 30000)
+        )
+      ])
+      fileBuffer = Buffer.from(arrayBuffer)
+      console.log('Buffer created, size:', fileBuffer.length)
+    } catch (error) {
+      console.error('Buffer conversion error:', error)
+      return NextResponse.json(
+        { error: 'Failed to process file. This may be due to Vercel plan limitations for large files.' },
+        { status: 413 }
+      )
+    }
 
     // Determine resource type and folder
     const resourceType = isImage ? 'image' : 'video'
     const folder = `glbiashara/user-${currentUser.userId}/${resourceType}s`
 
-    // Upload to Cloudinary
-    const uploadResult = await uploadToCloudinary(
-      fileBuffer,
-      fileName,
-      resourceType,
-      folder
-    ) as Record<string, unknown>
+    // Upload to Cloudinary with timeout
+    let uploadResult: Record<string, unknown>
+    try {
+      console.log('Starting Cloudinary upload...')
+      uploadResult = await Promise.race([
+        uploadToCloudinary(fileBuffer, fileName, resourceType, folder),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Cloudinary upload timeout')), 120000)
+        )
+      ]) as Record<string, unknown>
+      console.log('Cloudinary upload completed')
+    } catch (error) {
+      console.error('Cloudinary upload error:', error)
+      return NextResponse.json(
+        { error: 'Upload failed. Please try with a smaller file or check your internet connection.' },
+        { status: 500 }
+      )
+    }
     
     // Log the upload result for debugging
     console.log('Cloudinary upload result:', {

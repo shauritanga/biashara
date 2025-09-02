@@ -89,18 +89,38 @@ export function CloudinaryUpload({
 
     // Check if response is ok before trying to parse JSON
     if (!response.ok) {
-      if (response.status === 413) {
-        throw new Error('File too large for upload. Please use a smaller file (max 100MB for videos).')
+      let errorMessage = 'Upload failed'
+
+      try {
+        // Try to parse JSON error first
+        const errorData = await response.json()
+        if (errorData.error) {
+          errorMessage = errorData.error
+          if (errorData.code === 'VERCEL_LIMIT_EXCEEDED') {
+            errorMessage += ' This is a hosting plan limitation.'
+          }
+        }
+      } catch {
+        // If JSON parsing fails, try text
+        try {
+          const text = await response.text()
+          if (text.includes('Request Entity Too Large')) {
+            errorMessage = 'File too large for current hosting plan. Please use a smaller file (under 4MB for videos).'
+          } else if (text.includes('Function Execution Timeout')) {
+            errorMessage = 'Upload timeout. Please try with a smaller file or better internet connection.'
+          } else if (response.status === 413) {
+            errorMessage = 'File too large for upload. Please use a smaller file.'
+          } else if (response.status === 504) {
+            errorMessage = 'Upload timeout. Please try with a smaller file.'
+          } else {
+            errorMessage = `Upload failed: ${response.status} ${response.statusText}`
+          }
+        } catch {
+          errorMessage = `Upload failed: ${response.status} ${response.statusText}`
+        }
       }
-      if (response.status === 504) {
-        throw new Error('Upload timeout. Please try with a smaller file.')
-      }
-      // Try to get error message from response
-      const text = await response.text()
-      if (text.includes('Request Entity Too Large')) {
-        throw new Error('File too large for upload. Please use a smaller file.')
-      }
-      throw new Error(`Upload failed: ${response.status} ${response.statusText}`)
+
+      throw new Error(errorMessage)
     }
 
     const result = await response.json()
