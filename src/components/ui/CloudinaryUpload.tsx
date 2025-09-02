@@ -87,8 +87,24 @@ export function CloudinaryUpload({
       body: formData
     })
 
+    // Check if response is ok before trying to parse JSON
+    if (!response.ok) {
+      if (response.status === 413) {
+        throw new Error('File too large for upload. Please use a smaller file (max 100MB for videos).')
+      }
+      if (response.status === 504) {
+        throw new Error('Upload timeout. Please try with a smaller file.')
+      }
+      // Try to get error message from response
+      const text = await response.text()
+      if (text.includes('Request Entity Too Large')) {
+        throw new Error('File too large for upload. Please use a smaller file.')
+      }
+      throw new Error(`Upload failed: ${response.status} ${response.statusText}`)
+    }
+
     const result = await response.json()
-    
+
     if (!result.success) {
       throw new Error(result.error || 'Upload failed')
     }

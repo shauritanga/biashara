@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 // Define allowed file types and size limits
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime']
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
-const MAX_VIDEO_SIZE = 50 * 1024 * 1024 // 50MB
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024 // 10MB
+const MAX_VIDEO_SIZE = 100 * 1024 * 1024 // 100MB
 
 export async function POST(request: NextRequest) {
   try {
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     if (isVideo && file.size > MAX_VIDEO_SIZE) {
       return NextResponse.json(
-        { error: 'Video size exceeds the 50MB limit' },
+        { error: 'Video size exceeds the 100MB limit. Please compress your video or use a smaller file.' },
         { status: 400 }
       )
     }
